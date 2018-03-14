@@ -57,7 +57,8 @@ let gridOptions = {
       cellClass: 'number',
       valueFormatter: numberCellFormatter,
       cellRenderer:'agAnimateShowChangeCellRenderer',
-      allowedAggFuncs: ['avg','sum','min','max']
+      allowedAggFuncs: ['avg','sum','min','max'],
+      cellClassRules: {'negative': 'x < 0'}
     }
   },
   autoGroupColumnDef: {
