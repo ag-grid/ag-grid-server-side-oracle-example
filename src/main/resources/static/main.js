@@ -73,7 +73,7 @@ let gridOptions = {
   rowGroupPanelShow: 'always',
   pivotPanelShow: 'always',
   suppressAggFuncInHeader: true,
-  // animateRows: true
+  animateRows: false
 };
 
 function EnterpriseDatasource() {}
