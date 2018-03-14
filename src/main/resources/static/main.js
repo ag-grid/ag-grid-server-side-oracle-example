@@ -72,6 +72,7 @@ let gridOptions = {
   cacheBlockSize: 100,
   rowGroupPanelShow: 'always',
   pivotPanelShow: 'always',
+  suppressAggFuncInHeader: true,
   // animateRows: true
 };
 

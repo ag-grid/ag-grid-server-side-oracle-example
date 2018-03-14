@@ -5,6 +5,7 @@ import com.ag.grid.enterprise.sql.demo.aggridlib.request.EnterpriseGetRowsReques
 import com.ag.grid.enterprise.sql.demo.aggridlib.request.FilterModel;
 import com.ag.grid.enterprise.sql.demo.aggridlib.request.SortModel;
 import com.google.common.collect.Sets;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,14 +16,10 @@ import java.util.function.Predicate;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import static com.google.common.collect.Streams.zip;
 import static java.lang.String.format;
 import static java.lang.String.join;
-import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.*;
 import static java.util.stream.Stream.concat;
 
 /**
