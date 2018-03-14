@@ -1,16 +1,3 @@
-CREATE TABLE olympic_medals
-  (
-     athlete VARCHAR(255),
-     age     INT,
-     country VARCHAR(255),
-     year    INT,
-     sport   VARCHAR(255),
-     gold    INT,
-     silver  INT,
-     bronze  INT,
-     total   INT
-  );
-
 CREATE TABLE trade
   (
      product VARCHAR(255),
