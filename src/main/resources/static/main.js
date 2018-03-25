@@ -1,6 +1,6 @@
 var columnDefs = [
 
-  // these are the row groups, so they are all hidden (they are showd in the group column)
+  // these are the row groups, so they are all hidden (they are shown in the group column)
   {headerName: 'Hierarchy', children: [
       {headerName: 'Product', field: 'PRODUCT', type: 'dimension', rowGroupIndex: 0, hide: true},
       {headerName: 'Portfolio', field: 'PORTFOLIO', type: 'dimension', rowGroupIndex: 1, hide: true},
@@ -80,7 +80,8 @@ let gridOptions = {
 function EnterpriseDatasource() {}
 
 EnterpriseDatasource.prototype.getRows = function (params) {
-  let request = modifyRequestForSetFilters(modifyRequestForGroupColumnSorting(params.request));
+
+  let request = modifyRequestForGroupColumnSorting(params.request);
 
   let jsonRequest = JSON.stringify(request, null, 2);
   console.log(jsonRequest);
@@ -106,20 +107,6 @@ document.addEventListener('DOMContentLoaded', function () {
   gridOptions.api.setEnterpriseDatasource(new EnterpriseDatasource());
 });
 
-let modifyRequestForSetFilters = function (request) {
-  request.filterModel = Object.keys(request.filterModel)
-    .reduce(function (previous, current) {
-      let currentFilter = request.filterModel[current];
-
-      // convert set filter to common filter model format
-      previous[current] = (currentFilter instanceof Array) ?
-        {filterType: 'set', values: currentFilter} : currentFilter;
-
-      return previous;
-    }, {});
-  return request;
-};
-
 let modifyRequestForGroupColumnSorting = function (request) {
   let sortModel = request.sortModel;
   let index = sortModel.findIndex(e => e.colId === 'ag-Grid-AutoColumn');
@@ -142,7 +129,7 @@ let modifyRequestForGroupColumnSorting = function (request) {
 let updateSecondaryColumns = function (request, result) {
   let valueCols = request.valueCols;
   if (request.pivotMode && request.pivotCols.length > 0) {
-    let secondaryColDefs = createSecondaryColumns(result.secondaryColumns, valueCols);
+    let secondaryColDefs = createSecondaryColumns(result.secondaryColumnFields, valueCols);
     gridOptions.columnApi.setSecondaryColumns(secondaryColDefs);
   } else {
     gridOptions.columnApi.setSecondaryColumns([]);

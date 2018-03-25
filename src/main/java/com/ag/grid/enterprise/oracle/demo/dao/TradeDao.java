@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import static com.ag.grid.enterprise.oracle.demo.builder.EnterpriseResponseBuilder.createResponse;
 import static java.lang.String.format;
@@ -42,7 +45,7 @@ public class TradeDao {
     private Map<String, List<String>> getPivotValues(EnterpriseGetRowsRequest request) {
         return request.getPivotCols().stream()
                 .map(ColumnVO::getField)
-                .collect(toMap(pivotCol -> pivotCol, this::getPivotValues));
+                .collect(Collectors.toMap(pivotCol -> pivotCol, this::getPivotValues, (a,b) -> a, LinkedHashMap::new));
     }
 
     private List<String> getPivotValues(String pivotColumn) {

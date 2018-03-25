@@ -6,6 +6,7 @@ import com.ag.grid.enterprise.oracle.demo.response.EnterpriseGetRowsResponse;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,22 +30,26 @@ public class EnterpriseResponseBuilder {
 
     private static List<String> getSecondaryColumns(Map<String, List<String>> pivotValues, List<ColumnVO> valueColumns) {
 
-        List<Set<Pair<String, String>>> pairList = pivotValues.entrySet().stream()
+        // create pairs of pivot col and pivot value i.e. (DEALTYPE,Financial), (BIDTYPE,Sell)...
+        List<Set<Pair<String, String>>> pivotPairs = pivotValues.entrySet().stream()
                 .map(e -> e.getValue().stream()
                         .map(pivotValue -> Pair.of(e.getKey(), pivotValue))
-                        .collect(toSet()))
+                        .collect(toCollection(LinkedHashSet::new)))
                 .collect(toList());
 
-        return Sets.cartesianProduct(pairList)
+        // create cartesian product of pivot and value columns i.e. Financial_Sell_CURRENTVALUE, Physical_Buy_CURRENTVALUE...
+        return Sets.cartesianProduct(pivotPairs)
                 .stream()
                 .flatMap(pairs -> {
-                    String pivotColStr = pairs.stream()
+                    // collect pivot cols, i.e. Financial_Sell
+                    String pivotCol = pairs.stream()
                             .map(Pair::getRight)
                             .collect(joining("_"));
 
+                    // append value cols, i.e. Financial_Sell_CURRENTVALUE, Financial_Sell_PREVIOUSVALUE
                     return valueColumns.stream()
-                            .map(valueCol -> pivotColStr + "_" + valueCol.getField());
-
-                }).collect(toList());
+                            .map(valueCol -> pivotCol + "_" + valueCol.getField());
+                })
+                .collect(toList());
     }
 }

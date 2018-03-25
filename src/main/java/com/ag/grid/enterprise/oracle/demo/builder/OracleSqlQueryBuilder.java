@@ -142,13 +142,17 @@ public class OracleSqlQueryBuilder {
     }
 
     private Stream<String> extractPivotStatements() {
-        List<Set<Pair<String, String>>> pairList = pivotValues.entrySet().stream()
+
+        // create pairs of pivot col and pivot value i.e. (DEALTYPE,Financial), (BIDTYPE,Sell)...
+        List<Set<Pair<String, String>>> pivotPairs = pivotValues.entrySet().stream()
                 .map(e -> e.getValue().stream()
                         .map(pivotValue -> Pair.of(e.getKey(), pivotValue))
                         .collect(toCollection(LinkedHashSet::new)))
                 .collect(toList());
 
-        return Sets.cartesianProduct(pairList)
+        // create a cartesian product of decode statements for all pivot and value columns combinations
+        // i.e. sum(DECODE(DEALTYPE, 'Financial', DECODE(BIDTYPE, 'Sell', CURRENTVALUE)))
+        return Sets.cartesianProduct(pivotPairs)
                 .stream()
                 .flatMap(pairs -> {
                     String pivotColStr = pairs.stream()
