@@ -1,8 +1,12 @@
 package com.ag.grid.enterprise.sql.demo.aggridlib.builder;
 
-import com.ag.grid.enterprise.sql.demo.aggridlib.request.ColumnVO;
-import com.ag.grid.enterprise.sql.demo.aggridlib.request.EnterpriseGetRowsRequest;
-import com.ag.grid.enterprise.sql.demo.aggridlib.request.SortModel;
+import com.ag.grid.enterprise.sql.demo.builder.OracleSqlQueryBuilder;
+import com.ag.grid.enterprise.sql.demo.filter.ColumnFilter;
+import com.ag.grid.enterprise.sql.demo.filter.NumberColumnFilter;
+import com.ag.grid.enterprise.sql.demo.filter.SetColumnFilter;
+import com.ag.grid.enterprise.sql.demo.request.ColumnVO;
+import com.ag.grid.enterprise.sql.demo.request.EnterpriseGetRowsRequest;
+import com.ag.grid.enterprise.sql.demo.request.SortModel;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -98,36 +102,10 @@ public class OracleSqlQueryBuilderTest {
                 new ColumnVO("TOTAL", "Total", "TOTAL", "sum")
         ));
 
-
-//        FilterModel1<SetFilter> setFilter = new FilterModel1<>();
-//        FilterModel1<NumberFilter> numberFilter = new FilterModel1<>();
-//
-//        Map<String, FilterModel1> columnFilters = new HashMap<>();
-//        columnFilters.put("age", numberFilter);
-//        columnFilters.put("sport", setFilter);
-//
-//        columnFilters.entrySet().forEach(entry -> {
-//            Filter filter = entry.getValue().getFilter();
-//            System.out.println(filter);
-//        });
-//
-
-
-
-
-
-
-
-//        HashMap<String, FilterModel1> filterModel = new HashMap<>();
-//        filterModel.put("COUNTRY", new FilterModel1());
-
-//        FilterModel1<SetFilter> fm = new FilterModel1<>("set", );
-
-
-//        request.setFilterModel(new HashMap<String, FilterModel>() {{
-//            put("SPORT", new FilterModel(null, null, null, "set", asList("Rowing", "Tennis")));
-//            put("AGE", new FilterModel("equals", "22", null, "number", null));
-//        }});
+        request.setFilterModel(new HashMap<String, ColumnFilter>() {{
+            put("SPORT", new SetColumnFilter(asList("Rowing", "Tennis")));
+            put("AGE", new NumberColumnFilter("equals", 22, null));
+        }});
         request.setSortModel(singletonList(new SortModel("ATHLETE", "asc")));
 
         String sql = new OracleSqlQueryBuilder().createSql(request, "medal", emptyMap());
@@ -200,23 +178,4 @@ public class OracleSqlQueryBuilderTest {
                 "\"Speed Skating_2004_BRONZE\", sum(DECODE(SPORT, 'Speed Skating', DECODE(YEAR, '2004', TOTAL))) " +
                 "\"Speed Skating_2004_TOTAL\" FROM medal GROUP BY COUNTRY OFFSET 0 ROWS FETCH NEXT 101 ROWS ONLY", sql);
     }
-
-    @Test
-    public void fred() {
-
-//        Filter setFilter = new SetFilter(Arrays.asList("Athletics", "Tennis"));
-//        Filter numberFilter = new NumberFilter();
-//
-//        // fm.getType()
-//
-//        Map<String, Filter> columnFilters = new HashMap<>();
-//        columnFilters.put("age", numberFilter);
-//        columnFilters.put("sport", setFilter);
-//
-//        columnFilters.forEach((key, value) -> {
-//            System.out.println(value);
-//        });
-
-    }
-
 }

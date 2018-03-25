@@ -1,6 +1,6 @@
-package com.ag.grid.enterprise.sql.demo.aggridlib.request;
+package com.ag.grid.enterprise.sql.demo.request;
 
-import com.ag.grid.enterprise.sql.demo.aggridlib.filter.ColumnFilter;
+import com.ag.grid.enterprise.sql.demo.filter.ColumnFilter;
 
 import java.util.Map;
 

@@ -1,11 +1,11 @@
-package com.ag.grid.enterprise.sql.demo.aggridlib.builder;
+package com.ag.grid.enterprise.sql.demo.builder;
 
-import com.ag.grid.enterprise.sql.demo.aggridlib.filter.ColumnFilter;
-import com.ag.grid.enterprise.sql.demo.aggridlib.filter.NumberColumnFilter;
-import com.ag.grid.enterprise.sql.demo.aggridlib.filter.SetColumnFilter;
-import com.ag.grid.enterprise.sql.demo.aggridlib.request.ColumnVO;
-import com.ag.grid.enterprise.sql.demo.aggridlib.request.EnterpriseGetRowsRequest;
-import com.ag.grid.enterprise.sql.demo.aggridlib.request.SortModel;
+import com.ag.grid.enterprise.sql.demo.filter.ColumnFilter;
+import com.ag.grid.enterprise.sql.demo.filter.NumberColumnFilter;
+import com.ag.grid.enterprise.sql.demo.filter.SetColumnFilter;
+import com.ag.grid.enterprise.sql.demo.request.ColumnVO;
+import com.ag.grid.enterprise.sql.demo.request.EnterpriseGetRowsRequest;
+import com.ag.grid.enterprise.sql.demo.request.SortModel;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -91,7 +91,7 @@ public class OracleSqlQueryBuilder {
         Function<SortModel, String> orderByMapper = model -> model.getColId() + " " + model.getSort();
 
         boolean isDoingGrouping = rowGroups.size() > groupKeys.size();
-        int num = isDoingGrouping ? groupKeys.size() + 1 : 10;
+        int num = isDoingGrouping ? groupKeys.size() + 1 : 100;
 
         List<String> orderByCols = sortModel.stream()
                 .filter(model -> !isDoingGrouping || rowGroups.contains(model.getColId()))
@@ -107,22 +107,27 @@ public class OracleSqlQueryBuilder {
     }
 
     private Stream<String> getFilters() {
-        BiFunction<String, ColumnFilter, String> xFilter = (String columnName, ColumnFilter filter) -> {
+        Function<Map.Entry<String, ColumnFilter>, String> applyFilters = entry -> {
+            String columnName = entry.getKey();
+            ColumnFilter filter = entry.getValue();
+
             if (filter instanceof SetColumnFilter) {
                 return setFilter().apply(columnName, (SetColumnFilter) filter);
-            } else if (filter instanceof NumberColumnFilter) {
-                return numberFilter().apply(columnName, (NumberColumnFilter) filter);
-            } else {
-                return "";
             }
+
+            if (filter instanceof NumberColumnFilter) {
+                return numberFilter().apply(columnName, (NumberColumnFilter) filter);
+            }
+
+            return "";
         };
 
-        return filterModel.entrySet().stream().map(entry -> xFilter.apply(entry.getKey(), entry.getValue()));
+        return filterModel.entrySet().stream().map(applyFilters);
     }
 
     private BiFunction<String, SetColumnFilter, String> setFilter() {
         return (String columnName, SetColumnFilter filter) ->
-                    columnName + (filter.getValues().isEmpty() ? " IN ('') " : " IN " + asString(filter.getValues()));
+                columnName + (filter.getValues().isEmpty() ? " IN ('') " : " IN " + asString(filter.getValues()));
     }
 
     private BiFunction<String, NumberColumnFilter, String> numberFilter() {
@@ -142,8 +147,6 @@ public class OracleSqlQueryBuilder {
                         .map(pivotValue -> Pair.of(e.getKey(), pivotValue))
                         .collect(toCollection(LinkedHashSet::new)))
                 .collect(toList());
-
-        System.out.println(pairList);
 
         return Sets.cartesianProduct(pairList)
                 .stream()

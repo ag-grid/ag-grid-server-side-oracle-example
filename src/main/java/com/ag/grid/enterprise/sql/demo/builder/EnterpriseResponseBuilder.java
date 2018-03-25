@@ -1,8 +1,8 @@
-package com.ag.grid.enterprise.sql.demo.aggridlib.builder;
+package com.ag.grid.enterprise.sql.demo.builder;
 
-import com.ag.grid.enterprise.sql.demo.aggridlib.request.ColumnVO;
-import com.ag.grid.enterprise.sql.demo.aggridlib.request.EnterpriseGetRowsRequest;
-import com.ag.grid.enterprise.sql.demo.aggridlib.response.EnterpriseGetRowsResponse;
+import com.ag.grid.enterprise.sql.demo.request.ColumnVO;
+import com.ag.grid.enterprise.sql.demo.request.EnterpriseGetRowsRequest;
+import com.ag.grid.enterprise.sql.demo.response.EnterpriseGetRowsResponse;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.tuple.Pair;
 

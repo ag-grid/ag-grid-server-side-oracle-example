@@ -1,4 +1,4 @@
-package com.ag.grid.enterprise.sql.demo.aggridlib.filter;
+package com.ag.grid.enterprise.sql.demo.filter;
 
 import java.util.List;
 
