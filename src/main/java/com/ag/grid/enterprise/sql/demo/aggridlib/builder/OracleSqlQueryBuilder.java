@@ -1,18 +1,17 @@
 package com.ag.grid.enterprise.sql.demo.aggridlib.builder;
 
+import com.ag.grid.enterprise.sql.demo.aggridlib.filter.ColumnFilter;
+import com.ag.grid.enterprise.sql.demo.aggridlib.filter.NumberColumnFilter;
+import com.ag.grid.enterprise.sql.demo.aggridlib.filter.SetColumnFilter;
 import com.ag.grid.enterprise.sql.demo.aggridlib.request.ColumnVO;
 import com.ag.grid.enterprise.sql.demo.aggridlib.request.EnterpriseGetRowsRequest;
-import com.ag.grid.enterprise.sql.demo.aggridlib.request.FilterModel;
 import com.ag.grid.enterprise.sql.demo.aggridlib.request.SortModel;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -33,7 +32,7 @@ public class OracleSqlQueryBuilder {
     private boolean isGrouping;
     private List<ColumnVO> valueColumns;
     private List<ColumnVO> pivotColumns;
-    private Map<String, FilterModel> filterModel;
+    private Map<String, ColumnFilter> filterModel;
     private List<SortModel> sortModel;
     private int startRow, endRow;
     private List<ColumnVO> rowGroupCols;
@@ -108,36 +107,43 @@ public class OracleSqlQueryBuilder {
     }
 
     private Stream<String> getFilters() {
+        BiFunction<String, ColumnFilter, String> xFilter = (String columnName, ColumnFilter filter) -> {
+            if (filter instanceof SetColumnFilter) {
+                return setFilter().apply(columnName, (SetColumnFilter) filter);
+            } else if (filter instanceof NumberColumnFilter) {
+                return numberFilter().apply(columnName, (NumberColumnFilter) filter);
+            } else {
+                return "";
+            }
+        };
 
-        Predicate<FilterModel> isSetFilter =
-                fm -> fm.getFilterType().equals("set");
+        return filterModel.entrySet().stream().map(entry -> xFilter.apply(entry.getKey(), entry.getValue()));
+    }
 
-        Predicate<FilterModel> isInRangeFilter =
-                fm -> fm.getType() != null && fm.getType().equals("inRange");
+    private BiFunction<String, SetColumnFilter, String> setFilter() {
+        return (String columnName, SetColumnFilter filter) ->
+                    columnName + (filter.getValues().isEmpty() ? " IN ('') " : " IN " + asString(filter.getValues()));
+    }
 
-        Function<FilterModel, String> setFilter =
-                fm -> fm.getValues().isEmpty() ? " IN ('') " : " IN " + asString(fm.getValues());
+    private BiFunction<String, NumberColumnFilter, String> numberFilter() {
+        return (String columnName, NumberColumnFilter filter) -> {
+            Integer filterValue = filter.getFilter();
+            String filerType = filter.getType();
+            String operator = operatorMap.get(filerType);
 
-        Function<FilterModel, String> inRangeFilter =
-                fm -> " BETWEEN " + fm.getFilter() + " AND " + fm.getFilterTo();
-
-        Function<FilterModel, String> regularFilter =
-                fm -> " " + operatorMap.get(fm.getType()) + " " + fm.getFilter();
-
-        Function<Map.Entry<String, FilterModel>, String> filters = entry -> entry.getKey() +
-                (isSetFilter.test(entry.getValue()) ? setFilter.apply(entry.getValue()) :
-                        isInRangeFilter.test(entry.getValue()) ? inRangeFilter.apply(entry.getValue()) :
-                                regularFilter.apply(entry.getValue()));
-
-        return filterModel.entrySet().stream().map(filters);
+            return columnName + (filerType.equals("inRange") ?
+                    " BETWEEN " + filterValue + " AND " + filter.getFilterTo() : " " + operator + " " + filterValue);
+        };
     }
 
     private Stream<String> extractPivotStatements() {
         List<Set<Pair<String, String>>> pairList = pivotValues.entrySet().stream()
                 .map(e -> e.getValue().stream()
                         .map(pivotValue -> Pair.of(e.getKey(), pivotValue))
-                        .collect(toSet()))
+                        .collect(toCollection(LinkedHashSet::new)))
                 .collect(toList());
+
+        System.out.println(pairList);
 
         return Sets.cartesianProduct(pairList)
                 .stream()

@@ -113,7 +113,7 @@ let modifyRequestForSetFilters = function (request) {
 
       // convert set filter to common filter model format
       previous[current] = (currentFilter instanceof Array) ?
-        {filterType: 'set', filter: null, filterTo: null, values: currentFilter} : currentFilter;
+        {filterType: 'set', values: currentFilter} : currentFilter;
 
       return previous;
     }, {});

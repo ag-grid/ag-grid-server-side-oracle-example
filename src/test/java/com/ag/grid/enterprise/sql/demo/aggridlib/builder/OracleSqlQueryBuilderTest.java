@@ -2,7 +2,6 @@ package com.ag.grid.enterprise.sql.demo.aggridlib.builder;
 
 import com.ag.grid.enterprise.sql.demo.aggridlib.request.ColumnVO;
 import com.ag.grid.enterprise.sql.demo.aggridlib.request.EnterpriseGetRowsRequest;
-import com.ag.grid.enterprise.sql.demo.aggridlib.request.FilterModel;
 import com.ag.grid.enterprise.sql.demo.aggridlib.request.SortModel;
 import org.junit.Test;
 
@@ -98,10 +97,37 @@ public class OracleSqlQueryBuilderTest {
                 new ColumnVO("BRONZE", "Bronze", "BRONZE", "sum"),
                 new ColumnVO("TOTAL", "Total", "TOTAL", "sum")
         ));
-        request.setFilterModel(new HashMap<String, FilterModel>() {{
-            put("SPORT", new FilterModel(null, null, null, "set", asList("Rowing", "Tennis")));
-            put("AGE", new FilterModel("equals", "22", null, "number", null));
-        }});
+
+
+//        FilterModel1<SetFilter> setFilter = new FilterModel1<>();
+//        FilterModel1<NumberFilter> numberFilter = new FilterModel1<>();
+//
+//        Map<String, FilterModel1> columnFilters = new HashMap<>();
+//        columnFilters.put("age", numberFilter);
+//        columnFilters.put("sport", setFilter);
+//
+//        columnFilters.entrySet().forEach(entry -> {
+//            Filter filter = entry.getValue().getFilter();
+//            System.out.println(filter);
+//        });
+//
+
+
+
+
+
+
+
+//        HashMap<String, FilterModel1> filterModel = new HashMap<>();
+//        filterModel.put("COUNTRY", new FilterModel1());
+
+//        FilterModel1<SetFilter> fm = new FilterModel1<>("set", );
+
+
+//        request.setFilterModel(new HashMap<String, FilterModel>() {{
+//            put("SPORT", new FilterModel(null, null, null, "set", asList("Rowing", "Tennis")));
+//            put("AGE", new FilterModel("equals", "22", null, "number", null));
+//        }});
         request.setSortModel(singletonList(new SortModel("ATHLETE", "asc")));
 
         String sql = new OracleSqlQueryBuilder().createSql(request, "medal", emptyMap());
@@ -158,21 +184,39 @@ public class OracleSqlQueryBuilderTest {
 
         String sql = new OracleSqlQueryBuilder().createSql(request, "medal", pivotValues);
 
-        assertEquals("SELECT COUNTRY, sum(DECODE(SPORT, 'Athletics', DECODE(YEAR, '2004', GOLD))) \"Athletics_2004_GOLD\"," +
-                " sum(DECODE(SPORT, 'Athletics', DECODE(YEAR, '2004', SILVER))) \"Athletics_2004_SILVER\", sum(DECODE(SPORT, " +
-                "'Athletics', DECODE(YEAR, '2004', BRONZE))) \"Athletics_2004_BRONZE\", sum(DECODE(SPORT, 'Athletics', " +
-                "DECODE(YEAR, '2004', TOTAL))) \"Athletics_2004_TOTAL\", sum(DECODE(SPORT, 'Athletics', DECODE(YEAR, '2000', GOLD))) " +
-                "\"Athletics_2000_GOLD\", sum(DECODE(SPORT, 'Athletics', DECODE(YEAR, '2000', SILVER))) \"Athletics_2000_SILVER\", " +
-                "sum(DECODE(SPORT, 'Athletics', DECODE(YEAR, '2000', BRONZE))) \"Athletics_2000_BRONZE\", " +
-                "sum(DECODE(SPORT, 'Athletics', DECODE(YEAR, '2000', TOTAL))) \"Athletics_2000_TOTAL\", sum(DECODE(SPORT, " +
-                "'Speed Skating', DECODE(YEAR, '2004', GOLD))) \"Speed Skating_2004_GOLD\", sum(DECODE(SPORT, 'Speed Skating', " +
-                "DECODE(YEAR, '2004', SILVER))) \"Speed Skating_2004_SILVER\", sum(DECODE(SPORT, 'Speed Skating', " +
-                "DECODE(YEAR, '2004', BRONZE))) \"Speed Skating_2004_BRONZE\", sum(DECODE(SPORT, 'Speed Skating', " +
-                "DECODE(YEAR, '2004', TOTAL))) \"Speed Skating_2004_TOTAL\", sum(DECODE(SPORT, 'Speed Skating', " +
-                "DECODE(YEAR, '2000', GOLD))) \"Speed Skating_2000_GOLD\", sum(DECODE(SPORT, 'Speed Skating', " +
-                "DECODE(YEAR, '2000', SILVER))) \"Speed Skating_2000_SILVER\", sum(DECODE(SPORT, 'Speed Skating', " +
-                "DECODE(YEAR, '2000', BRONZE))) \"Speed Skating_2000_BRONZE\", sum(DECODE(SPORT, 'Speed Skating', " +
-                "DECODE(YEAR, '2000', TOTAL))) \"Speed Skating_2000_TOTAL\" FROM medal GROUP BY COUNTRY OFFSET 0 ROWS " +
-                "FETCH NEXT 101 ROWS ONLY", sql);
+        assertEquals("SELECT COUNTRY, sum(DECODE(SPORT, 'Athletics', DECODE(YEAR, '2000', GOLD))) \"Athletics_2000_GOLD\"," +
+                " sum(DECODE(SPORT, 'Athletics', DECODE(YEAR, '2000', SILVER))) \"Athletics_2000_SILVER\", sum(DECODE(SPORT," +
+                " 'Athletics', DECODE(YEAR, '2000', BRONZE))) \"Athletics_2000_BRONZE\", sum(DECODE(SPORT, 'Athletics'," +
+                " DECODE(YEAR, '2000', TOTAL))) \"Athletics_2000_TOTAL\", sum(DECODE(SPORT, 'Athletics', DECODE(YEAR," +
+                " '2004', GOLD))) \"Athletics_2004_GOLD\", sum(DECODE(SPORT, 'Athletics', DECODE(YEAR, '2004', SILVER)))" +
+                " \"Athletics_2004_SILVER\", sum(DECODE(SPORT, 'Athletics', DECODE(YEAR, '2004', BRONZE)))" +
+                " \"Athletics_2004_BRONZE\", sum(DECODE(SPORT, 'Athletics', DECODE(YEAR, '2004', TOTAL))) \"Athletics_2004_TOTAL\"," +
+                " sum(DECODE(SPORT, 'Speed Skating', DECODE(YEAR, '2000', GOLD))) \"Speed Skating_2000_GOLD\", sum(DECODE(SPORT," +
+                " 'Speed Skating', DECODE(YEAR, '2000', SILVER))) \"Speed Skating_2000_SILVER\", sum(DECODE(SPORT, 'Speed Skating'," +
+                " DECODE(YEAR, '2000', BRONZE))) \"Speed Skating_2000_BRONZE\", sum(DECODE(SPORT, 'Speed Skating', DECODE(YEAR," +
+                " '2000', TOTAL))) \"Speed Skating_2000_TOTAL\", sum(DECODE(SPORT, 'Speed Skating', DECODE(YEAR, '2004', GOLD)))" +
+                " \"Speed Skating_2004_GOLD\", sum(DECODE(SPORT, 'Speed Skating', DECODE(YEAR, '2004', SILVER))) " +
+                "\"Speed Skating_2004_SILVER\", sum(DECODE(SPORT, 'Speed Skating', DECODE(YEAR, '2004', BRONZE))) " +
+                "\"Speed Skating_2004_BRONZE\", sum(DECODE(SPORT, 'Speed Skating', DECODE(YEAR, '2004', TOTAL))) " +
+                "\"Speed Skating_2004_TOTAL\" FROM medal GROUP BY COUNTRY OFFSET 0 ROWS FETCH NEXT 101 ROWS ONLY", sql);
     }
+
+    @Test
+    public void fred() {
+
+//        Filter setFilter = new SetFilter(Arrays.asList("Athletics", "Tennis"));
+//        Filter numberFilter = new NumberFilter();
+//
+//        // fm.getType()
+//
+//        Map<String, Filter> columnFilters = new HashMap<>();
+//        columnFilters.put("age", numberFilter);
+//        columnFilters.put("sport", setFilter);
+//
+//        columnFilters.forEach((key, value) -> {
+//            System.out.println(value);
+//        });
+
+    }
+
 }

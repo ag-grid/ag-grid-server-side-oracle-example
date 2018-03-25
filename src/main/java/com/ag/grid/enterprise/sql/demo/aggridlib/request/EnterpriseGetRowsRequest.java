@@ -1,5 +1,7 @@
 package com.ag.grid.enterprise.sql.demo.aggridlib.request;
 
+import com.ag.grid.enterprise.sql.demo.aggridlib.filter.ColumnFilter;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +29,7 @@ public class EnterpriseGetRowsRequest implements Serializable {
     private List<String> groupKeys;
 
     // if filtering, what the filter model is
-    private Map<String, FilterModel> filterModel;
+    private Map<String, ColumnFilter> filterModel;
 
     // if sorting, what the sort model is
     private List<SortModel> sortModel;
@@ -97,11 +99,11 @@ public class EnterpriseGetRowsRequest implements Serializable {
         this.groupKeys = groupKeys;
     }
 
-    public Map<String, FilterModel> getFilterModel() {
+    public Map<String, ColumnFilter> getFilterModel() {
         return filterModel;
     }
 
-    public void setFilterModel(Map<String, FilterModel> filterModel) {
+    public void setFilterModel(Map<String, ColumnFilter> filterModel) {
         this.filterModel = filterModel;
     }
 
