@@ -11,8 +11,6 @@ import org.springframework.stereotype.Repository;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 import static com.ag.grid.enterprise.oracle.demo.builder.EnterpriseResponseBuilder.createResponse;
 import static java.lang.String.format;
@@ -34,9 +32,7 @@ public class TradeDao {
         String tableName = "trade"; // could be supplied in request as a lookup key?
 
         Map<String, List<String>> pivotValues = getPivotValues(request);
-
         String sql = queryBuilder.createSql(request, tableName, pivotValues);
-
         List<Map<String, Object>> rows = template.queryForList(sql);
 
         return createResponse(request, rows, pivotValues);
@@ -45,7 +41,7 @@ public class TradeDao {
     private Map<String, List<String>> getPivotValues(EnterpriseGetRowsRequest request) {
         return request.getPivotCols().stream()
                 .map(ColumnVO::getField)
-                .collect(Collectors.toMap(pivotCol -> pivotCol, this::getPivotValues, (a,b) -> a, LinkedHashMap::new));
+                .collect(toMap(pivotCol -> pivotCol, this::getPivotValues, (a, b) -> a, LinkedHashMap::new));
     }
 
     private List<String> getPivotValues(String pivotColumn) {

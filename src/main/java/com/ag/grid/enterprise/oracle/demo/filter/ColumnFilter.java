@@ -11,5 +11,5 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = NumberColumnFilter.class, name = "number"),
         @JsonSubTypes.Type(value = SetColumnFilter.class, name = "set") })
 public abstract class ColumnFilter {
-    public String filterType;
+    String filterType;
 }

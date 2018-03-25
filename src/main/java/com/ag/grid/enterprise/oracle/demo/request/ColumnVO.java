@@ -64,17 +64,6 @@ public class ColumnVO implements Serializable {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(id, displayName, field, aggFunc);
-    }
-
-    @Override
-    public String toString() {
-        return "ColumnVO{" +
-                "id='" + id + '\'' +
-                ", displayName='" + displayName + '\'' +
-                ", field='" + field + '\'' +
-                ", aggFunc='" + aggFunc + '\'' +
-                '}';
     }
 }
