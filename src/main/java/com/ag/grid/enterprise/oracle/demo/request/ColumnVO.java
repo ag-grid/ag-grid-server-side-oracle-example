@@ -1,4 +1,4 @@
-package com.ag.grid.enterprise.sql.demo.request;
+package com.ag.grid.enterprise.oracle.demo.request;
 
 import java.io.Serializable;
 import java.util.Objects;

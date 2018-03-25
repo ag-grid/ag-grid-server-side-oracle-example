@@ -1,11 +1,11 @@
-package com.ag.grid.enterprise.sql.demo.builder;
+package com.ag.grid.enterprise.oracle.demo.builder;
 
-import com.ag.grid.enterprise.sql.demo.filter.ColumnFilter;
-import com.ag.grid.enterprise.sql.demo.filter.NumberColumnFilter;
-import com.ag.grid.enterprise.sql.demo.filter.SetColumnFilter;
-import com.ag.grid.enterprise.sql.demo.request.ColumnVO;
-import com.ag.grid.enterprise.sql.demo.request.EnterpriseGetRowsRequest;
-import com.ag.grid.enterprise.sql.demo.request.SortModel;
+import com.ag.grid.enterprise.oracle.demo.filter.ColumnFilter;
+import com.ag.grid.enterprise.oracle.demo.filter.NumberColumnFilter;
+import com.ag.grid.enterprise.oracle.demo.filter.SetColumnFilter;
+import com.ag.grid.enterprise.oracle.demo.request.ColumnVO;
+import com.ag.grid.enterprise.oracle.demo.request.EnterpriseGetRowsRequest;
+import com.ag.grid.enterprise.oracle.demo.request.SortModel;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.tuple.Pair;
 

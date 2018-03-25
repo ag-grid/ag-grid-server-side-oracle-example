@@ -1,4 +1,4 @@
-package com.ag.grid.enterprise.sql.demo.filter;
+package com.ag.grid.enterprise.oracle.demo.filter;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

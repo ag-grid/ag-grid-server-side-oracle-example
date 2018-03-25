@@ -1,4 +1,4 @@
-package com.ag.grid.enterprise.sql.demo;
+package com.ag.grid.enterprise.oracle.demo;
 
 public class Trade {
     private String product;

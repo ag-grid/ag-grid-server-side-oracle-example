@@ -1,8 +1,8 @@
-package com.ag.grid.enterprise.sql.demo.builder;
+package com.ag.grid.enterprise.oracle.demo.builder;
 
-import com.ag.grid.enterprise.sql.demo.request.ColumnVO;
-import com.ag.grid.enterprise.sql.demo.request.EnterpriseGetRowsRequest;
-import com.ag.grid.enterprise.sql.demo.response.EnterpriseGetRowsResponse;
+import com.ag.grid.enterprise.oracle.demo.request.ColumnVO;
+import com.ag.grid.enterprise.oracle.demo.request.EnterpriseGetRowsRequest;
+import com.ag.grid.enterprise.oracle.demo.response.EnterpriseGetRowsResponse;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.tuple.Pair;
 

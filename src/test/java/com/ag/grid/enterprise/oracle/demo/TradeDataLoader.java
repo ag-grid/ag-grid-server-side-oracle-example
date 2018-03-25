@@ -1,4 +1,4 @@
-package com.ag.grid.enterprise.sql.demo;
+package com.ag.grid.enterprise.oracle.demo;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

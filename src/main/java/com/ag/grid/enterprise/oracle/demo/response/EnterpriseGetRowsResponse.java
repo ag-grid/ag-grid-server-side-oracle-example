@@ -1,4 +1,4 @@
-package com.ag.grid.enterprise.sql.demo.response;
+package com.ag.grid.enterprise.oracle.demo.response;
 
 import java.util.List;
 import java.util.Map;

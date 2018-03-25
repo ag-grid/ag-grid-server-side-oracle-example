@@ -1,9 +1,9 @@
-package com.ag.grid.enterprise.sql.demo.dao;
+package com.ag.grid.enterprise.oracle.demo.dao;
 
-import com.ag.grid.enterprise.sql.demo.builder.OracleSqlQueryBuilder;
-import com.ag.grid.enterprise.sql.demo.request.ColumnVO;
-import com.ag.grid.enterprise.sql.demo.request.EnterpriseGetRowsRequest;
-import com.ag.grid.enterprise.sql.demo.response.EnterpriseGetRowsResponse;
+import com.ag.grid.enterprise.oracle.demo.builder.OracleSqlQueryBuilder;
+import com.ag.grid.enterprise.oracle.demo.request.ColumnVO;
+import com.ag.grid.enterprise.oracle.demo.request.EnterpriseGetRowsRequest;
+import com.ag.grid.enterprise.oracle.demo.response.EnterpriseGetRowsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Map;
 
-import static com.ag.grid.enterprise.sql.demo.builder.EnterpriseResponseBuilder.createResponse;
+import static com.ag.grid.enterprise.oracle.demo.builder.EnterpriseResponseBuilder.createResponse;
 import static java.lang.String.format;
 import static java.util.stream.Collectors.toMap;
 

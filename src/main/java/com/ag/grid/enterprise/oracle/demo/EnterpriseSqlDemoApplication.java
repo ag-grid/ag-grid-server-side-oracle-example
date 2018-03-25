@@ -1,4 +1,4 @@
-package com.ag.grid.enterprise.sql.demo;
+package com.ag.grid.enterprise.oracle.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

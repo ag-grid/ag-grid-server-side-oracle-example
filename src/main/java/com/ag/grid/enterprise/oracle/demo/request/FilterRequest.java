@@ -1,6 +1,6 @@
-package com.ag.grid.enterprise.sql.demo.request;
+package com.ag.grid.enterprise.oracle.demo.request;
 
-import com.ag.grid.enterprise.sql.demo.filter.ColumnFilter;
+import com.ag.grid.enterprise.oracle.demo.filter.ColumnFilter;
 
 import java.util.Map;
 

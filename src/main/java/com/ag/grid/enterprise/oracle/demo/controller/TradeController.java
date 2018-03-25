@@ -1,8 +1,8 @@
-package com.ag.grid.enterprise.sql.demo.controller;
+package com.ag.grid.enterprise.oracle.demo.controller;
 
-import com.ag.grid.enterprise.sql.demo.request.EnterpriseGetRowsRequest;
-import com.ag.grid.enterprise.sql.demo.response.EnterpriseGetRowsResponse;
-import com.ag.grid.enterprise.sql.demo.dao.TradeDao;
+import com.ag.grid.enterprise.oracle.demo.request.EnterpriseGetRowsRequest;
+import com.ag.grid.enterprise.oracle.demo.response.EnterpriseGetRowsResponse;
+import com.ag.grid.enterprise.oracle.demo.dao.TradeDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestBody;

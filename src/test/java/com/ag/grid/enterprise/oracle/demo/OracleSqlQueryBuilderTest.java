@@ -1,12 +1,12 @@
-package com.ag.grid.enterprise.sql.demo.aggridlib.builder;
+package com.ag.grid.enterprise.oracle.demo;
 
-import com.ag.grid.enterprise.sql.demo.builder.OracleSqlQueryBuilder;
-import com.ag.grid.enterprise.sql.demo.filter.ColumnFilter;
-import com.ag.grid.enterprise.sql.demo.filter.NumberColumnFilter;
-import com.ag.grid.enterprise.sql.demo.filter.SetColumnFilter;
-import com.ag.grid.enterprise.sql.demo.request.ColumnVO;
-import com.ag.grid.enterprise.sql.demo.request.EnterpriseGetRowsRequest;
-import com.ag.grid.enterprise.sql.demo.request.SortModel;
+import com.ag.grid.enterprise.oracle.demo.builder.OracleSqlQueryBuilder;
+import com.ag.grid.enterprise.oracle.demo.filter.ColumnFilter;
+import com.ag.grid.enterprise.oracle.demo.filter.NumberColumnFilter;
+import com.ag.grid.enterprise.oracle.demo.filter.SetColumnFilter;
+import com.ag.grid.enterprise.oracle.demo.request.ColumnVO;
+import com.ag.grid.enterprise.oracle.demo.request.EnterpriseGetRowsRequest;
+import com.ag.grid.enterprise.oracle.demo.request.SortModel;
 import org.junit.Test;
 
 import java.util.HashMap;
