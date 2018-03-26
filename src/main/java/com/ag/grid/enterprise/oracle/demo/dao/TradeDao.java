@@ -31,15 +31,21 @@ public class TradeDao {
     public EnterpriseGetRowsResponse getData(EnterpriseGetRowsRequest request) {
         String tableName = "trade"; // could be supplied in request as a lookup key?
 
-        Map<String, List<String>> pivotValues = getPivotValues(request);
+        // first obtain the pivot values from the DB for the requested pivot columns
+        Map<String, List<String>> pivotValues = getPivotValues(request.getPivotCols());
+
+        // generate sql
         String sql = queryBuilder.createSql(request, tableName, pivotValues);
+
+        // query db for rows
         List<Map<String, Object>> rows = template.queryForList(sql);
 
+        // create response with our results
         return createResponse(request, rows, pivotValues);
     }
 
-    private Map<String, List<String>> getPivotValues(EnterpriseGetRowsRequest request) {
-        return request.getPivotCols().stream()
+    private Map<String, List<String>> getPivotValues(List<ColumnVO> pivotCols) {
+        return pivotCols.stream()
                 .map(ColumnVO::getField)
                 .collect(toMap(pivotCol -> pivotCol, this::getPivotValues, (a, b) -> a, LinkedHashMap::new));
     }

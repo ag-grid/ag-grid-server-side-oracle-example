@@ -80,10 +80,7 @@ let gridOptions = {
 function EnterpriseDatasource() {}
 
 EnterpriseDatasource.prototype.getRows = function (params) {
-
-  let request = modifyRequestForGroupColumnSorting(params.request);
-
-  let jsonRequest = JSON.stringify(request, null, 2);
+  let jsonRequest = JSON.stringify(params.request, null, 2);
   console.log(jsonRequest);
 
   let httpRequest = new XMLHttpRequest();
@@ -95,7 +92,7 @@ EnterpriseDatasource.prototype.getRows = function (params) {
       let result = JSON.parse(httpRequest.responseText);
       params.successCallback(result.data, result.lastRow);
 
-      updateSecondaryColumns(request, result);
+      updateSecondaryColumns(params.request, result);
     }
   };
 };
@@ -106,25 +103,6 @@ document.addEventListener('DOMContentLoaded', function () {
   new agGrid.Grid(gridDiv, gridOptions);
   gridOptions.api.setEnterpriseDatasource(new EnterpriseDatasource());
 });
-
-let modifyRequestForGroupColumnSorting = function (request) {
-  let sortModel = request.sortModel;
-  let index = sortModel.findIndex(e => e.colId === 'ag-Grid-AutoColumn');
-
-  if (index > -1) {
-    let rowGroups = request.rowGroupCols.map(group => {
-      return {
-        colId: group.field,
-        sort: sortModel[index].sort
-      }
-    });
-
-    sortModel.splice.apply(sortModel, [index, 1].concat(rowGroups));
-  }
-
-  request.sortModel = sortModel;
-  return request;
-};
 
 let updateSecondaryColumns = function (request, result) {
   let valueCols = request.valueCols;

@@ -99,7 +99,7 @@ public class OracleSqlQueryBuilder {
                 .limit(num)
                 .collect(toList());
 
-        return (orderByCols.isEmpty() ? "" : " ORDER BY " + join(",", orderByCols));
+        return orderByCols.isEmpty() ? "" : " ORDER BY " + join(",", orderByCols);
     }
 
     private String limitSql() {

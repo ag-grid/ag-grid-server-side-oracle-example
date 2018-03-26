@@ -55,11 +55,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.github.noraui</groupId>
+			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc7</artifactId>
 			<version>12.1.0.2</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/lib/ojdbc7-12.1.0.2.jar</systemPath>
 		</dependency>
 
 		<dependency>
