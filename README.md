@@ -4,7 +4,7 @@
 
 A reference implementation showing how to perform server-side operations using Oracle with ag-Grid.
 
-![](https://github.com/ag-grid/ag-grid-docs/blob/latest/src/oracle-server-side-operations/oracle-enterprise.png.png "")
+![](https://github.com/ag-grid/ag-grid-docs/blob/latest/src/oracle-server-side-operations/oracle-enterprise.png "")
 
 For full details see: http://ag-grid.com/oracle-server-side-operations/
 
