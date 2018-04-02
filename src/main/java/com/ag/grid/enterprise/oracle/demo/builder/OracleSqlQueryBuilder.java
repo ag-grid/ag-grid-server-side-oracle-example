@@ -16,6 +16,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static com.google.common.collect.Streams.zip;
+import static java.lang.Integer.MAX_VALUE;
 import static java.lang.String.format;
 import static java.lang.String.join;
 import static java.util.stream.Collectors.*;
@@ -91,7 +92,7 @@ public class OracleSqlQueryBuilder {
         Function<SortModel, String> orderByMapper = model -> model.getColId() + " " + model.getSort();
 
         boolean isDoingGrouping = rowGroups.size() > groupKeys.size();
-        int num = isDoingGrouping ? groupKeys.size() + 1 : 100;
+        int num = isDoingGrouping ? groupKeys.size() + 1 : MAX_VALUE;
 
         List<String> orderByCols = sortModel.stream()
                 .filter(model -> !isDoingGrouping || rowGroups.contains(model.getColId()))
